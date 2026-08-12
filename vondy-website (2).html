@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vondy — Ansible Automation, AI Integration &amp; Linux Hardening</title>
+<meta name="description" content="Vondy delivers Ansible &amp; automation training, practical AI integration, and CIS-aligned Linux server hardening for companies who want enterprise-grade results without enterprise-grade pricing.">
+<meta name="theme-color" content="#0a1420">
+<link rel="canonical" href="https://www.vondy.io/">
+
+<!-- Open Graph / social preview -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Vondy">
+<meta property="og:title" content="Vondy — Ansible Automation, AI Integration & Linux Hardening">
+<meta property="og:description" content="Ansible training, AI integration, and CIS-aligned Linux hardening — enterprise-grade results without the enterprise-grade invoice.">
+<meta property="og:url" content="https://www.vondy.io/">
+<meta property="og:image" content="https://www.vondy.io/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Vondy — Ansible Automation, AI Integration & Linux Hardening">
+<meta name="twitter:description" content="Ansible training, AI integration, and CIS-aligned Linux hardening — enterprise-grade results without the enterprise-grade invoice.">
+<meta name="twitter:image" content="https://www.vondy.io/og-image.png">
+
+<!-- Favicon: inline SVG, no external file needed. Replace with your own /favicon.svg once hosted. -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' fill='%230a1420'/%3E%3Cpath d='M20 5 L34 12.5 V27.5 L20 35 L6 27.5 V12.5 Z' stroke='%23c8a24d' stroke-width='2' fill='none'/%3E%3Cpath d='M13 15 L20 29 L27 15' stroke='%23c8a24d' stroke-width='2.4' fill='none'/%3E%3C/svg%3E">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy-deep:#0a1420;
+    --navy:#101d2e;
+    --navy-panel:#15243a;
+    --navy-line:#22374f;
+    --cream:#f3efe4;
+    --cream-dim:#c9c3b2;
+    --brass:#c8a24d;
+    --brass-bright:#e6c778;
+    --brass-dim:#8a723c;
+    --term-green:#5fd98a;
+    --term-red:#e2695f;
+    --shadow:0 20px 60px rgba(0,0,0,.45);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--navy-deep);
+    color:var(--cream);
+    font-family:'Inter',sans-serif;
+    overflow-x:hidden;
+  }
+  h1,h2,h3,.disp{font-family:'Oswald',sans-serif; text-transform:uppercase; letter-spacing:.02em;}
+  .mono{font-family:'JetBrains Mono',monospace;}
+  a{color:inherit;text-decoration:none;}
+  .wrap{max-width:1180px; margin:0 auto; padding:0 32px;}
+  ::selection{background:var(--brass); color:var(--navy-deep);}
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; scroll-behavior:auto !important;}
+  }
+
+  /* ---------- NAV ---------- */
+  header{
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    padding:20px 0;
+    transition:background .3s ease, padding .3s ease, border-color .3s ease;
+    border-bottom:1px solid transparent;
+  }
+  header.scrolled{
+    background:rgba(10,20,32,.88);
+    backdrop-filter:blur(10px);
+    padding:14px 0;
+    border-bottom:1px solid var(--navy-line);
+  }
+  nav{display:flex; align-items:center; justify-content:space-between;}
+  .logo{display:flex; align-items:center; gap:10px; font-family:'Oswald',sans-serif; font-size:22px; letter-spacing:.12em; font-weight:600;}
+  .logo svg{width:30px; height:30px; flex-shrink:0;}
+  .logo-word{display:inline-block;}
+  .logo-word .accent{color:var(--brass);}
+  .navlinks{display:flex; gap:36px; align-items:center;}
+  .navlinks a{font-size:13px; letter-spacing:.08em; text-transform:uppercase; color:var(--cream-dim); transition:color .2s;}
+  .navlinks a:hover{color:var(--brass-bright);}
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    padding:12px 22px; border-radius:2px;
+    font-size:12px; letter-spacing:.1em; text-transform:uppercase; font-weight:600;
+    border:1px solid var(--brass);
+    color:var(--navy-deep); background:var(--brass);
+    transition:all .25s ease; cursor:pointer;
+  }
+  .btn:hover{background:var(--brass-bright); border-color:var(--brass-bright); transform:translateY(-2px); box-shadow:0 8px 24px rgba(200,162,77,.25);}
+  .btn-ghost{background:transparent; color:var(--cream); border-color:var(--navy-line);}
+  .btn-ghost:hover{border-color:var(--brass); color:var(--brass-bright); background:transparent; box-shadow:none;}
+  .mobile-toggle{display:none;}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    min-height:100vh;
+    display:flex; align-items:center;
+    padding:140px 0 80px;
+    position:relative;
+    background:
+      radial-gradient(ellipse 900px 500px at 85% -10%, rgba(200,162,77,.10), transparent 60%),
+      radial-gradient(ellipse 700px 500px at 0% 100%, rgba(95,217,138,.06), transparent 60%),
+      var(--navy-deep);
+  }
+  .hero::before{
+    content:"";
+    position:absolute; inset:0;
+    background-image:
+      linear-gradient(rgba(200,162,77,.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(200,162,77,.035) 1px, transparent 1px);
+    background-size:44px 44px;
+    mask-image:linear-gradient(to bottom, black, transparent 75%);
+    pointer-events:none;
+  }
+  .hero-grid{display:grid; grid-template-columns:1.05fr 1fr; gap:64px; align-items:center; position:relative;}
+  .hero-grid.hero-solo{grid-template-columns:1fr; max-width:760px;}
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:10px;
+    font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--term-green); margin-bottom:22px;
+    border:1px solid rgba(95,217,138,.3); padding:6px 12px; border-radius:2px; background:rgba(95,217,138,.06);
+  }
+  .eyebrow .dot{width:6px; height:6px; border-radius:50%; background:var(--term-green); box-shadow:0 0 8px var(--term-green); animation:pulse 1.8s infinite;}
+  @keyframes pulse{0%,100%{opacity:1;}50%{opacity:.3;}}
+  .hero h1{
+    font-size:clamp(36px,4.6vw,58px); line-height:1.05; font-weight:600; margin-bottom:22px;
+    opacity:0; transform:translateY(18px); animation:riseIn .7s ease forwards .1s;
+  }
+  .hero h1 em{font-style:normal; color:var(--brass-bright);}
+  .hero p.lede{
+    font-size:18px; line-height:1.65; color:var(--cream-dim); max-width:640px; margin-bottom:34px;
+    opacity:0; transform:translateY(18px); animation:riseIn .7s ease forwards .25s;
+  }
+  .hero-ctas{display:flex; gap:16px; flex-wrap:wrap; opacity:0; transform:translateY(18px); animation:riseIn .7s ease forwards .4s;}
+  @keyframes riseIn{to{opacity:1; transform:translateY(0);}}
+
+  /* ---------- TRUST MARQUEE ---------- */
+  .trust{
+    border-top:1px solid var(--navy-line); border-bottom:1px solid var(--navy-line);
+    background:var(--navy); padding:26px 0; overflow:hidden;
+  }
+  .trust-label{
+    text-align:center; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.16em;
+    color:var(--cream-dim); text-transform:uppercase; margin-bottom:18px;
+  }
+  .marquee{display:flex; width:max-content; animation:scroll 28s linear infinite;}
+  .marquee:hover{animation-play-state:paused;}
+  .marquee-track{display:flex; gap:56px; padding-right:56px; align-items:center;}
+  .marquee-track span{
+    font-family:'Oswald',sans-serif; font-size:19px; letter-spacing:.08em; color:var(--cream-dim);
+    white-space:nowrap; opacity:.85; transition:opacity .2s, color .2s;
+  }
+  .marquee-track span:hover{color:var(--brass-bright); opacity:1;}
+  @keyframes scroll{from{transform:translateX(0);} to{transform:translateX(-50%);}}
+
+  /* ---------- SECTION SHARED ---------- */
+  section{padding:110px 0;}
+  .sec-head{max-width:640px; margin-bottom:64px;}
+  .sec-eyebrow{font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:.16em; text-transform:uppercase; color:var(--brass); margin-bottom:14px;}
+  .sec-head h2{font-size:clamp(28px,3.4vw,40px); font-weight:600; line-height:1.15; margin-bottom:16px;}
+  .sec-head p{color:var(--cream-dim); font-size:16.5px; line-height:1.65;}
+
+  .reveal{opacity:0; transform:translateY(28px); transition:opacity .7s ease, transform .7s ease;}
+  .reveal.in{opacity:1; transform:translateY(0);}
+
+  /* ---------- SERVICES ---------- */
+  .services{background:var(--navy);}
+  .svc-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--navy-line); border:1px solid var(--navy-line); border-radius:10px; overflow:hidden;}
+  .svc-card{
+    background:var(--navy-panel); padding:34px 26px; transition:background .3s ease, transform .3s ease;
+    position:relative;
+  }
+  .svc-card:hover{background:#182a42; transform:translateY(-4px);}
+  .svc-icon{width:44px; height:44px; margin-bottom:22px; color:var(--brass-bright);}
+  .svc-card h3{font-size:19px; font-weight:500; margin-bottom:12px; letter-spacing:.01em;}
+  .svc-card p{font-size:14.5px; line-height:1.6; color:var(--cream-dim);}
+  .svc-tag{
+    display:inline-block; margin-top:18px; font-family:'JetBrains Mono',monospace; font-size:11px;
+    color:var(--term-green); letter-spacing:.05em;
+  }
+  @media (max-width:900px){.svc-grid{grid-template-columns:repeat(2,1fr);}}
+  @media (max-width:560px){.svc-grid{grid-template-columns:1fr;}}
+
+  /* ---------- COMPARISON ---------- */
+  .compare-wrap{
+    border:1px solid var(--navy-line); border-radius:10px; overflow:hidden;
+    box-shadow:var(--shadow);
+  }
+  table{width:100%; border-collapse:collapse;}
+  thead th{
+    background:var(--navy-panel); padding:20px 24px; text-align:left;
+    font-family:'Oswald',sans-serif; font-size:15px; letter-spacing:.04em; text-transform:uppercase; font-weight:500;
+    border-bottom:1px solid var(--navy-line);
+  }
+  thead th.hi{color:var(--brass-bright); position:relative;}
+  tbody td{padding:18px 24px; border-bottom:1px solid var(--navy-line); font-size:14.5px; color:var(--cream-dim);}
+  tbody tr:last-child td{border-bottom:none;}
+  tbody td:first-child{color:var(--cream); font-weight:500; width:32%;}
+  td.hi{color:var(--term-green); font-weight:600; background:rgba(95,217,138,.04);}
+  td.no{color:#6c7789;}
+
+  /* ---------- PROCESS ---------- */
+  .process{background:var(--navy);}
+  .proc-row{display:grid; grid-template-columns:repeat(4,1fr); gap:28px;}
+  .proc-step{position:relative; padding-top:8px;}
+  .proc-num{
+    font-family:'JetBrains Mono',monospace; font-size:13px; color:var(--brass); letter-spacing:.06em; margin-bottom:14px; display:block;
+  }
+  .proc-step h3{font-size:18px; font-weight:500; margin-bottom:10px;}
+  .proc-step p{font-size:14px; color:var(--cream-dim); line-height:1.6;}
+  .proc-line{position:absolute; top:6px; left:-14px; width:1px; height:100%; background:var(--navy-line);}
+  .proc-step:first-child .proc-line{display:none;}
+  @media (max-width:900px){.proc-row{grid-template-columns:1fr 1fr; row-gap:40px;} }
+  @media (max-width:560px){.proc-row{grid-template-columns:1fr;}}
+
+  /* ---------- PRICING ---------- */
+  .price-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:24px;}
+  .price-card{
+    background:var(--navy-panel); border:1px solid var(--navy-line); border-radius:10px; padding:36px 30px;
+    display:flex; flex-direction:column; transition:transform .3s ease, border-color .3s ease;
+  }
+  .price-card:hover{transform:translateY(-6px); border-color:var(--brass-dim);}
+  .price-card.feat{border-color:var(--brass); background:linear-gradient(180deg, rgba(200,162,77,.08), var(--navy-panel) 40%); position:relative;}
+  .price-card.feat::before{
+    content:"Most Popular"; position:absolute; top:-13px; left:30px;
+    background:var(--brass); color:var(--navy-deep); font-size:11px; font-weight:700; letter-spacing:.06em;
+    padding:5px 12px; border-radius:20px; text-transform:uppercase; font-family:'Inter',sans-serif;
+  }
+  .price-name{font-family:'Oswald',sans-serif; font-size:20px; letter-spacing:.04em; text-transform:uppercase; margin-bottom:8px;}
+  .price-desc{font-size:14px; color:var(--cream-dim); margin-bottom:22px; line-height:1.55; min-height:44px;}
+  .price-amt{font-family:'JetBrains Mono',monospace; font-size:15px; color:var(--brass-bright); margin-bottom:24px; padding-bottom:24px; border-bottom:1px solid var(--navy-line);}
+  .price-feats{list-style:none; margin-bottom:30px; flex:1;}
+  .price-feats li{font-size:14px; color:var(--cream-dim); margin-bottom:12px; padding-left:22px; position:relative;}
+  .price-feats li::before{content:"✓"; position:absolute; left:0; color:var(--term-green); font-weight:700;}
+  @media (max-width:900px){.price-grid{grid-template-columns:1fr;}}
+
+  /* ---------- CTA BAND ---------- */
+  .cta-band{
+    background:linear-gradient(120deg, #0d1826, #182a42);
+    border-top:1px solid var(--navy-line); border-bottom:1px solid var(--navy-line);
+    text-align:center; padding:100px 0;
+    position:relative; overflow:hidden;
+  }
+  .cta-band::after{
+    content:""; position:absolute; width:600px; height:600px; border-radius:50%;
+    background:radial-gradient(circle, rgba(200,162,77,.12), transparent 70%);
+    top:-300px; left:50%; transform:translateX(-50%); pointer-events:none;
+  }
+  .cta-band h2{font-size:clamp(28px,4vw,42px); margin-bottom:18px; position:relative;}
+  .cta-band p{color:var(--cream-dim); font-size:17px; margin-bottom:36px; position:relative;}
+
+  /* ---------- CONTACT / FOOTER ---------- */
+  footer{background:var(--navy-deep); padding:90px 0 30px; border-top:1px solid var(--navy-line);}
+  .foot-grid{display:grid; grid-template-columns:1fr 1fr; gap:60px; margin-bottom:70px;}
+  .foot-grid h2{font-size:clamp(24px,3vw,32px); margin-bottom:16px;}
+  .foot-grid > div:first-child p{color:var(--cream-dim); line-height:1.65; margin-bottom:26px; max-width:420px;}
+  .contact-line{display:flex; align-items:center; gap:12px; font-size:14.5px; color:var(--cream-dim); margin-bottom:14px;}
+  .contact-line svg{width:18px; height:18px; color:var(--brass); flex-shrink:0;}
+  form{display:flex; flex-direction:column; gap:16px;}
+  .form-row{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
+  input, textarea, select{
+    background:var(--navy-panel); border:1px solid var(--navy-line); border-radius:4px;
+    padding:14px 16px; color:var(--cream); font-family:'Inter',sans-serif; font-size:14px;
+    transition:border-color .2s; width:100%;
+  }
+  input:focus, textarea:focus, select:focus{outline:none; border-color:var(--brass);}
+  textarea{resize:vertical; min-height:100px;}
+  label{font-size:12px; letter-spacing:.06em; text-transform:uppercase; color:var(--cream-dim); margin-bottom:6px; display:block;}
+  .field{display:flex; flex-direction:column;}
+  .form-note{font-size:12px; color:#6c7789; margin-top:4px;}
+
+  .foot-bottom{display:flex; justify-content:space-between; align-items:center; padding-top:30px; border-top:1px solid var(--navy-line); flex-wrap:wrap; gap:14px;}
+  .foot-bottom .logo{font-size:16px;}
+  .foot-bottom p{font-size:12.5px; color:#6c7789;}
+
+  @media (max-width:900px){
+    .hero-grid{grid-template-columns:1fr;}
+    .navlinks{display:none;}
+    .foot-grid{grid-template-columns:1fr;}
+    .form-row{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+<header id="siteHeader">
+  <div class="wrap">
+    <nav>
+      <a href="#top" class="logo">
+        <svg viewBox="0 0 40 40" fill="none"><path d="M20 3 L36 12 V28 L20 37 L4 28 V12 Z" stroke="#c8a24d" stroke-width="1.6"/><path d="M12 15 L20 30 L28 15" stroke="#c8a24d" stroke-width="2" fill="none"/></svg>
+        <span class="logo-word">VON<span class="accent">DY</span></span>
+      </a>
+      <div class="navlinks">
+        <a href="#services">Services</a>
+        <a href="#why">Why Vondy</a>
+        <a href="#process">Process</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#contact" class="btn">Request a Briefing</a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<div id="top"></div>
+<section class="hero">
+  <div class="wrap hero-grid hero-solo">
+    <div>
+      <div class="eyebrow"><span class="dot"></span> AUTOMATION &amp; SECURITY ENGINEERING</div>
+      <h1>Federal-grade automation, <em>without</em> the federal contractor invoice.</h1>
+      <p class="lede">We train your team on Ansible, harden your Linux fleet to the same standards used across DoD and federal networks, and integrate AI into workflows that actually save time — built by engineers who've done the work, not sold to you by an account manager.</p>
+      <div class="hero-ctas">
+        <a href="#contact" class="btn">Request a Briefing</a>
+        <a href="#services" class="btn btn-ghost">See What We Do</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="trust">
+  <div class="wrap">
+    <div class="trust-label">Experience earned inside</div>
+  </div>
+  <div class="marquee">
+    <div class="marquee-track">
+      <span>USCENTCOM</span><span>USSOCOM</span><span>USMEPCOM</span><span>DFAS HQ</span><span>LEO BURNETT</span><span>CISA (DHS)</span>
+    </div>
+    <div class="marquee-track" aria-hidden="true">
+      <span>USCENTCOM</span><span>USSOCOM</span><span>USMEPCOM</span><span>DFAS HQ</span><span>LEO BURNETT</span><span>CISA (DHS)</span>
+    </div>
+  </div>
+</div>
+
+<section class="services" id="services">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="sec-eyebrow">Capabilities</div>
+      <h2>Four things we do. All of them well.</h2>
+      <p>No bloated service catalog, no bench of subcontractors. Just the work that moves your infrastructure and your people forward.</p>
+    </div>
+    <div class="svc-grid">
+      <div class="svc-card reveal">
+        <svg class="svc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2 4 6v6c0 5 3.4 8.7 8 10 4.6-1.3 8-5 8-10V6l-8-4Z"/><path d="m9 12 2 2 4-4"/></svg>
+        <h3>Ansible &amp; Automation Training</h3>
+        <p>Hands-on, playbook-first training that gets your team writing production-ready automation in days — not a semester of theory.</p>
+        <span class="svc-tag">$ ansible-playbook train.yml</span>
+      </div>
+      <div class="svc-card reveal">
+        <svg class="svc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M3 12h3M18 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></svg>
+        <h3>AI Integration</h3>
+        <p>Practical AI woven into the systems you already run — ticket triage, reporting, ops copilots — not a chatbot bolted onto your homepage.</p>
+        <span class="svc-tag">$ status: deployed</span>
+      </div>
+      <div class="svc-card reveal">
+        <svg class="svc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="4" width="16" height="7" rx="1"/><rect x="4" y="13" width="16" height="7" rx="1"/><circle cx="8" cy="7.5" r=".8" fill="currentColor" stroke="none"/><circle cx="8" cy="16.5" r=".8" fill="currentColor" stroke="none"/></svg>
+        <h3>Linux Server Hardening</h3>
+        <p>CIS-aligned hardening, patch discipline, and access controls built on the same standards used to secure federal infrastructure.</p>
+        <span class="svc-tag">$ CIS Level 2 compliant</span>
+      </div>
+      <div class="svc-card reveal">
+        <svg class="svc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 17V7l8-4 8 4v10l-8 4-8-4Z"/><path d="M4 7l8 4 8-4M12 11v10"/></svg>
+        <h3>Custom Automation Engineering</h3>
+        <p>We build the playbooks, pipelines, and scripts that turn your manual, ticket-driven ops into a single keystroke.</p>
+        <span class="svc-tag">$ tasks: 0 failed</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="why">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="sec-eyebrow">The Difference</div>
+      <h2>Same standard. Different overhead.</h2>
+      <p>The big consultancies aren't wrong about the work — they're wrong about who does it and what they charge you for the privilege.</p>
+    </div>
+    <div class="compare-wrap reveal">
+      <table>
+        <thead>
+          <tr><th>&nbsp;</th><th>Big Consultancies</th><th class="hi">Vondy</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Who does the work</td><td class="no">Junior staff, rotated mid-project</td><td class="hi">The engineer who scoped it, start to finish</td></tr>
+          <tr><td>Background</td><td class="no">Varies by staffing bench</td><td class="hi">USCENTCOM, USSOCOM, USMEPCOM, DFAS HQ, CISA (DHS)</td></tr>
+          <tr><td>Pricing model</td><td class="no">Retainer + markup + change orders</td><td class="hi">Flat, scoped, quoted up front</td></tr>
+          <tr><td>Time to first playbook</td><td class="no">Weeks of discovery</td><td class="hi">Days</td></tr>
+          <tr><td>Contract length</td><td class="no">12–36 month lock-in</td><td class="hi">Scoped by engagement, no lock-in</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="process" id="process">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="sec-eyebrow">Engagement</div>
+      <h2>How an engagement actually runs</h2>
+      <p>Four stages, in order, every time. No surprise phases added mid-contract.</p>
+    </div>
+    <div class="proc-row">
+      <div class="proc-step reveal"><span class="proc-num">01 / ASSESS</span><h3>Audit your fleet</h3><p>We map your servers, workflows, and risk surface before touching anything.</p></div>
+      <div class="proc-step reveal"><div class="proc-line"></div><span class="proc-num">02 / HARDEN</span><h3>Harden &amp; automate</h3><p>CIS-aligned hardening and the playbooks that keep it that way after we leave.</p></div>
+      <div class="proc-step reveal"><div class="proc-line"></div><span class="proc-num">03 / TRAIN</span><h3>Train your team</h3><p>Your engineers learn the exact playbooks running in your environment.</p></div>
+      <div class="proc-step reveal"><div class="proc-line"></div><span class="proc-num">04 / SUPPORT</span><h3>Stay reachable</h3><p>Direct line to the engineer who built it — not a ticket queue.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="pricing">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="sec-eyebrow">Investment</div>
+      <h2>Scoped to the work, not your headcount</h2>
+      <p>Every engagement is quoted against real scope. These are starting points for the conversation.</p>
+    </div>
+    <div class="price-grid">
+      <div class="price-card reveal">
+        <div class="price-name">Assessment</div>
+        <div class="price-desc">A hardening &amp; automation-readiness audit of your current environment.</div>
+        <div class="price-amt">Starting at $1,000</div>
+        <ul class="price-feats">
+          <li>Full server &amp; access audit</li>
+          <li>CIS gap analysis</li>
+          <li>Automation opportunity report</li>
+          <li>Written findings + roadmap</li>
+        </ul>
+        <a href="#contact" class="btn btn-ghost">Request a Quote</a>
+      </div>
+      <div class="price-card feat reveal">
+        <div class="price-name">Engagement</div>
+        <div class="price-desc">Hardening, automation build-out, and hands-on team training.</div>
+        <div class="price-amt">Custom scoped quote</div>
+        <ul class="price-feats">
+          <li>Everything in Assessment</li>
+          <li>Ansible playbook development</li>
+          <li>Server hardening implementation</li>
+          <li>Team training sessions</li>
+          <li>AI integration where it fits</li>
+        </ul>
+        <a href="#contact" class="btn">Request a Quote</a>
+      </div>
+      <div class="price-card reveal">
+        <div class="price-name">Partner</div>
+        <div class="price-desc">Ongoing retainer for ops support, updates, and new automation.</div>
+        <div class="price-amt">Monthly retainer</div>
+        <ul class="price-feats">
+          <li>Everything in Engagement</li>
+          <li>Direct engineer access</li>
+          <li>Quarterly hardening review</li>
+          <li>Priority response window</li>
+        </ul>
+        <a href="#contact" class="btn btn-ghost">Request a Quote</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-band">
+  <div class="wrap">
+    <h2>Ready to harden, automate, and stop overpaying?</h2>
+    <p>Tell us what you're running. We'll tell you exactly what it takes to fix it.</p>
+    <a href="#contact" class="btn">Request a Briefing</a>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="reveal">
+        <div class="sec-eyebrow">Get In Touch</div>
+        <h2>Let's talk about your infrastructure.</h2>
+        <p>Send us a few details about your environment and team size. We reply personally — no sales team, no drip campaign.</p>
+        <div class="contact-line"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 4h16v16H4z" opacity="0"/><path d="m3 6 9 6 9-6M4 5h16v14H4z"/></svg> contactvondysolutions@gmail.com</div>
+        <div class="contact-line"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0 1 18 0Z"/><circle cx="12" cy="10" r="3"/></svg> Tampa, FL — remote &amp; on-site</div>
+      </div>
+      <!--
+        FORM STATUS: connected to Formspree (form ID xdengjqo).
+        Submissions email contactvondysolutions@gmail.com and also appear
+        in the Formspree dashboard at https://formspree.io — log in there
+        to review past submissions.
+      -->
+      <form class="reveal" id="contactForm" action="https://formspree.io/f/xdengjqo" method="POST">
+        <div class="form-row">
+          <div class="field"><label for="name">Name</label><input id="name" name="name" required placeholder="Jane Ops"></div>
+          <div class="field"><label for="company">Company</label><input id="company" name="company" placeholder="Your company"></div>
+        </div>
+        <div class="form-row">
+          <div class="field"><label for="email">Email</label><input id="email" name="email" type="email" required placeholder="you@company.com"></div>
+          <div class="field"><label for="need">What do you need?</label>
+            <select id="need" name="need">
+              <option>Ansible / Automation Training</option>
+              <option>AI Integration</option>
+              <option>Linux Server Hardening</option>
+              <option>Custom Automation</option>
+              <option>Not sure yet</option>
+            </select>
+          </div>
+        </div>
+        <div class="field"><label for="msg">Details</label><textarea id="msg" name="message" placeholder="Team size, current stack, timeline..."></textarea></div>
+        <!-- Honeypot field: hidden from real users, catches basic spam bots -->
+        <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
+        <button type="submit" class="btn" style="align-self:flex-start;">Send Request</button>
+        <p class="form-note" id="formNote">We reply within one business day.</p>
+      </form>
+    </div>
+    <div class="foot-bottom">
+      <a href="#top" class="logo"><span class="logo-word">VON<span class="accent">DY</span></span></a>
+      <p>© 2026 Vondy.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Header blur on scroll
+  const header = document.getElementById('siteHeader');
+  window.addEventListener('scroll', () => {
+    header.classList.toggle('scrolled', window.scrollY > 20);
+  });
+
+  // Scroll reveal
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.15 });
+  revealEls.forEach(el => io.observe(el));
+
+  // Contact form submission (requires a real Formspree endpoint — see comment above the form)
+  const contactForm = document.getElementById('contactForm');
+  const formNote = document.getElementById('formNote');
+  if (contactForm) {
+    contactForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const submitBtn = contactForm.querySelector('button[type="submit"]');
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Sending...';
+      formNote.style.color = '';
+      formNote.textContent = 'Sending your request...';
+      try {
+        const res = await fetch(contactForm.action, {
+          method: 'POST',
+          body: new FormData(contactForm),
+          headers: { 'Accept': 'application/json' }
+        });
+        if (res.ok) {
+          formNote.textContent = "Thanks — we'll be in touch within one business day.";
+          formNote.style.color = 'var(--term-green)';
+          contactForm.reset();
+        } else {
+          throw new Error('Submission failed');
+        }
+      } catch (err) {
+        formNote.textContent = 'Something went wrong sending that. Please email contactvondysolutions@gmail.com directly.';
+        formNote.style.color = 'var(--term-red)';
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Send Request';
+      }
+    });
+  }
+
+</script>
+</body>
+</html>
